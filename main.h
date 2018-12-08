@@ -54,5 +54,3 @@ int MouseLook = 1;
 #include "output.c"
 #include "textures.c"
 
-int main(int argc, char* argv[]);
-

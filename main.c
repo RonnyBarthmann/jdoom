@@ -41,13 +41,13 @@
 int main(int argc, char* argv[]) {
   if ( initOutput(OutputDriver) == 0 ) {
     return 0;
-  }
+  };
   if ( openOutput(OutputDriver,width,height) == 0 ) {
     return 0;
-  }
+  };
 
   // do {
   // } while ( 1 == 1 );
-}
+};
 
 
