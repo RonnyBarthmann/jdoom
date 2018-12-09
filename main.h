@@ -42,15 +42,22 @@
 #include <SDL/SDL.h>
 #endif
 
+#include <math.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <time.h>
 
 int MouseLook = 1;
+float  px = 0, py = 0, ph = 100, pa = 0;
 
+#include "math.h"
 #include "output.h"
 #include "config.h"
 #include "textures.h"
+//#include "player.h"
 
+//#include "math.c"
 #include "output.c"
 #include "textures.c"
+#include "player.c"
 

@@ -36,20 +36,44 @@
  *
  */
 
-// Mainoptions
-int    width = 800;      // window or screen width
-int    height = 600;     // window or screen height
-int    MouseSupport = 1; // Grab the mouse
-double MouseFactor = 0.5; // Mouse speed
-int    OutputDriver = 0; // 0 = SDL
-                         // 1 = SDL Fullscreen ( not implimented yet )
-                         // 2 = FBdev ( Z:\dev\fb0 ) ( not implimented yet )
-
-// Debugoptions
-int    RenderFailsafe = 1;
-int    DebugModeWall = 1;   // if 1, draw outlines and corners on walls
-int    DebugModeFlat = 1;   // if 1, draw outlines and corners on flats and cellings
-int    DebugModeSprite = 1; // if 1, draw outlines and corners on sprites
-int    RenderWallTex = 1;   // if 0, render flat color on walls
-int    RenderFlatTex = 1;   // if 0, render flat color on flats and cellings
-int    RenderSpriteTex = 1; // if 0, render flat color on sprites
+void updatePlayer(int delay, int x, int y, int a, int mx, int my, int s) {
+  float d = (float) delay;
+  if ( y == -1 && s != 0 ) {
+    py -= sin(Radians(pa))*d/2;
+    px -= cos(Radians(pa))*d/2;
+  }
+  if ( y == -1 && s == 0 ) {
+    py -= sin(Radians(pa))*d/5;
+    px -= cos(Radians(pa))*d/5;
+  }
+  if ( y == 1 && s != 0 ) {
+    py += sin(Radians(pa))*d/2;
+    px += cos(Radians(pa))*d/2;
+  }
+  if ( y == 1 && s == 0 ) {
+    py += sin(Radians(pa))*d/5;
+    px += cos(Radians(pa))*d/5;
+  }
+  if ( x == 1 && s != 0 ) {
+    px -= sin(Radians(pa))*d/2;
+    py += cos(Radians(pa))*d/2;
+  }
+  if ( x == 1 && s == 0 ) {
+    px -= sin(Radians(pa))*d/5;
+    py += cos(Radians(pa))*d/5;
+  }
+  if ( x == -1 && s != 0 ) {
+    px += sin(Radians(pa))*d/2;
+    py -= cos(Radians(pa))*d/2;
+  }
+  if ( x == -1 && s == 0 ) {
+    px += sin(Radians(pa))*d/5;
+    py -= cos(Radians(pa))*d/5;
+  }
+  if ( a == 1 ) {
+    pa += d/10;
+  }
+  if ( a == -1 ) {
+    pa -= d/10;
+  }
+}

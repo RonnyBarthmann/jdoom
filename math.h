@@ -36,20 +36,7 @@
  *
  */
 
-// Mainoptions
-int    width = 800;      // window or screen width
-int    height = 600;     // window or screen height
-int    MouseSupport = 1; // Grab the mouse
-double MouseFactor = 0.5; // Mouse speed
-int    OutputDriver = 0; // 0 = SDL
-                         // 1 = SDL Fullscreen ( not implimented yet )
-                         // 2 = FBdev ( Z:\dev\fb0 ) ( not implimented yet )
-
-// Debugoptions
-int    RenderFailsafe = 1;
-int    DebugModeWall = 1;   // if 1, draw outlines and corners on walls
-int    DebugModeFlat = 1;   // if 1, draw outlines and corners on flats and cellings
-int    DebugModeSprite = 1; // if 1, draw outlines and corners on sprites
-int    RenderWallTex = 1;   // if 0, render flat color on walls
-int    RenderFlatTex = 1;   // if 0, render flat color on flats and cellings
-int    RenderSpriteTex = 1; // if 0, render flat color on sprites
+#include <math.h>
+#define Radians(aDeg) ((aDeg) * M_PI / 180.0)
+#define Degrees(aRad) ((aRad) * 180.0 / M_PI)
+//#define M_PI   3.14159265358979323846264338327950288

@@ -66,7 +66,6 @@ SDL_Surface *openOutput(int output, int width, int height) {
       screen = SDL_SetVideoMode(width, height, 32, SDL_RESIZABLE|SDL_SWSURFACE);  // Create a resizable window with SDL context
       if(screen)                                                    // if opened successful
       {
-        SDL_WM_SetCaption("yDOOM", "yDOOM");                        // set the title
         fprintf(stderr, "open SDL window successful");
         fprintf(stderr, "\n");
         return screen;                                              // return success
@@ -98,6 +97,15 @@ SDL_Surface *openOutput(int output, int width, int height) {
   };
   return 0;
 }
+
+void setOutputTitle(int output, char title[]) {
+  switch ( output ) {
+    case 0: // SDL window
+      SDL_WM_SetCaption(title, title);
+      break;
+  }
+}
+
 
 void plotPixel(SDL_Surface *screen, int x, int y, Uint32 pixel) {
   int bpp = screen->format->BytesPerPixel;

@@ -39,7 +39,13 @@
 #include "main.h"
 
 int main(int argc, char* argv[]) {
-  int exit = 0;
+  clock_t start, stop;    // Timers
+  int delay;              // time between to frames
+  int fps;                // frames per secound
+  char fpsS[12];          // fps as string
+  start = clock();        // Start first Timer
+  int exit = 0;           // exittrigger > 0 = run, 1 = exit per key, 2 = exit per window
+
   SDL_Surface* screen;
   SDL_Event event;
   int x_movement;
@@ -62,6 +68,15 @@ int main(int argc, char* argv[]) {
 
   // Main-Loop
   do {
+    // Timer
+    stop = clock();
+    delay = stop - start;
+    start = clock();
+    fps = 1000000 / delay;
+    sprintf(fpsS,"%d",fps);
+    setOutputTitle(OutputDriver,fpsS);
+    // for ( int i = 0 ; i < 1000000 ; i++ ) i++;
+
     // EventHandler
     while ( SDL_PollEvent( &event ) ) {
       switch( event.type ) {
@@ -77,9 +92,11 @@ int main(int argc, char* argv[]) {
               x_movement =  1;
               break;
             case SDLK_w:
+            case SDLK_UP:
               y_movement =  1;
               break;
             case SDLK_s:
+            case SDLK_DOWN:
               y_movement = -1;
               break;
             case SDLK_LEFT:
@@ -105,9 +122,11 @@ int main(int argc, char* argv[]) {
               x_movement = 0;
               break;
             case SDLK_w:
+            case SDLK_UP:
               y_movement = 0;
               break;
             case SDLK_s:
+            case SDLK_DOWN:
               y_movement = 0;
               break;
             case SDLK_LEFT:
