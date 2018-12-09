@@ -35,10 +35,18 @@
  * erhalten haben. Wenn nicht, siehe <https://www.gnu.org/licenses/>.
  *
  */
-
 #include "main.h"
 
 int main(int argc, char* argv[]) {
+
+  if ( width > 7680 || height > 4320 ) {
+      fprintf(stderr, "Unable to init Render\n");
+      fprintf(stderr, "This Version support only\n");
+      fprintf(stderr, "up to 7680x4320 ( 8k )\n");
+      fprintf(stderr, "... end\n");
+      return 0;
+  };
+
   clock_t start, stop;    // Timers
   int delay;              // time between to frames
   int fps;                // frames per secound
@@ -53,18 +61,26 @@ int main(int argc, char* argv[]) {
   int a_movement;
   int fastmove;
   if ( sizeof(int) != 4 ) {
-    fprintf(stderr, " fatal: sizeof(int) != 4 > exit");
+    fprintf(stderr, " fatal: sizeof(int) != 4 > exit\n");
     return 0;
   };
   if ( initOutput(OutputDriver) == 0 ) {               // Init the outputsystem
-    fprintf(stderr, " fatal: cannot init the OutputDriver > exit");
+    fprintf(stderr, " fatal: cannot init the OutputDriver > exit\n");
     return 0;                                          // if failed > exit
   };
   screen = openOutput(OutputDriver,width,height);
   if ( screen == 0 ) {                                 // Open the outputsystem
-    fprintf(stderr, " fatal: cannot open the OutputDriver > exit");
+    fprintf(stderr, " fatal: cannot open the OutputDriver > exit\n");
     return 0;                                          // if failed > exit
   };
+
+  DummyTex(0,32,RGB(85,85,85),RGB(170,170,170));
+  DummyTex(1,32,RGB(0,0,170),RGB(85,85,255));
+  DummyTex(2,32,RGB(0,170,0),RGB(85,255,85));
+  DummyTex(3,32,RGB(170,0,0),RGB(255,85,85));
+  DummyTex(4,32,RGB(0,170,170),RGB(85,255,255));
+  DummyTex(5,32,RGB(170,170,0),RGB(255,255,85));
+  DummyTex(6,32,RGB(170,0,170),RGB(255,85,255));
 
   // Main-Loop
   do {
@@ -82,6 +98,15 @@ int main(int argc, char* argv[]) {
       switch( event.type ) {
         case SDL_QUIT:
           exit = 2; // EXIT by window
+          break;
+        case SDL_VIDEORESIZE:
+          width = event.resize.w;
+          height = event.resize.h;
+          screen = resizeOutput(OutputDriver,width,height);
+          if ( screen == 0 ) {
+            fprintf(stderr, " fatal: cannot resize the OutputDriver > exit\n");
+            return 0;
+          };
           break;
         case SDL_KEYDOWN:
           switch( event.key.keysym.sym ){
@@ -110,6 +135,10 @@ int main(int argc, char* argv[]) {
               break;
             case SDLK_ESCAPE:
               exit = 1; // EXIT by key
+              break;
+            case SDLK_TAB:
+              mouseLook = 1 - mouseLook;
+              break;
             default:
               break;
           }
@@ -147,15 +176,19 @@ int main(int argc, char* argv[]) {
     }
 
     // MoveHandler
-    // insert here the Sin() Cos() XY shit...
+    updatePlayer(delay,x_movement,y_movement,a_movement,0,0,0);
 
     // ScreenHandler
-    if ( startDrawing(screen) != 1 ) {
-      fprintf(stderr, " fatal: cannot draw on the OutputDriver > exit");
+    if ( startDrawing(OutputDriver,screen) != 1 ) {
+      fprintf(stderr, " fatal: cannot draw on the OutputDriver > exit\n");
       return 0;
     }
-    plotPixel(screen,px,1,255);
-    stopDrawing(screen,1);
+    clearScene();
+
+    // Rendering
+
+    stopDrawing(OutputDriver,1);
+    outputStuff(OutputDriver);
   } while ( exit == 0 );
   // Cleanup
   SDL_Quit();

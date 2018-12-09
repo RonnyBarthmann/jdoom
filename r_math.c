@@ -36,32 +36,33 @@
  *
  */
 
-#ifdef WIN32
-#include <SDL.h>
-#else
-#include <SDL/SDL.h>
-#endif
+double getFlat3Dy(int w, int h, int x, int y, double z, double ignore) {
+  if ( z < 0 ) return -1;
+  double oy = y - ( h / 2 );
+  oy /= ( h / 2 );
+  oy = z / oy;
+  return oy;
+}
 
-#include <math.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <time.h>
+double getFlat3Dx(int w, int h, int x, int y, double z, double oy) {
+  double ox = x - ( w / 2 );
+  ox /= ( h / 2 );
+  ox *= oy;
+  return ox;
+}
 
-int mouseLook = 1;
-float  px = 0, py = 0, ph = 100, pa = 0;
+double getCeiling3Dy(int w, int h, int x, int y, double z, double ignore) {
+  if ( z > 0 ) return -1;
+  double oy = y - ( h / 2 );
+  oy /= ( h / 2 );
+  oy = z / oy;
+  return oy;
+}
 
-#include "math.h"
-#include "output.h"
-#include "config.h"
-#include "textures.h"
-//#include "player.h"
-//#include "r_math.h"
-#include "render.h"
-
-//#include "math.c"
-#include "output.c"
-#include "textures.c"
-#include "player.c"
-#include "r_math.c"
-#include "render.c"
+double getCeiling3Dx(int w, int h, int x, int y, double z, double oy) {
+  double ox = x - ( w / 2 );
+  ox /= ( h / 2 );
+  ox *= oy;
+  return ox;
+}
 

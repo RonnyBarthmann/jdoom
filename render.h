@@ -36,32 +36,5 @@
  *
  */
 
-#ifdef WIN32
-#include <SDL.h>
-#else
-#include <SDL/SDL.h>
-#endif
-
-#include <math.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <time.h>
-
-int mouseLook = 1;
-float  px = 0, py = 0, ph = 100, pa = 0;
-
-#include "math.h"
-#include "output.h"
-#include "config.h"
-#include "textures.h"
-//#include "player.h"
-//#include "r_math.h"
-#include "render.h"
-
-//#include "math.c"
-#include "output.c"
-#include "textures.c"
-#include "player.c"
-#include "r_math.c"
-#include "render.c"
-
+double scale = 1;
+double zBuffer[7680][4320]; // Max 8k ( 4320p )

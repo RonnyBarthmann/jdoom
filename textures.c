@@ -36,7 +36,7 @@
  *
  */
 
-struct tex {
+struct texture {
   int used;
   int width;
   int height;
@@ -44,7 +44,7 @@ struct tex {
   int x;
   int y;
 };
-struct tex ImageMemory[255];
+struct texture ImageMemory[255];
 
 int DummyTex(int tex, int size, int c1, int c2) {
   fprintf(stderr, "Create Texture ... ");
@@ -60,25 +60,25 @@ int DummyTex(int tex, int size, int c1, int c2) {
     for ( int y = 0; y < size/2; y++) {
       for ( int x = 0; x < size/2 ; x++) {
         int *address = ImageMemory[tex].mem;
-        *(address + ( ImageMemory[tex].width * y * 4 ) + ( x * 4 )) = c1;
+        *(address + ( ImageMemory[tex].width * y ) + x ) = c1;
       }
     }
     for ( int y = size/2; y < size; y++) {                   // draw lines from up to down
       for ( int x = size/2; x < size ; x++) {                // and the lines from left to right
         int *address = ImageMemory[tex].mem;                 // grab the address of the Texture-Memory
-        *(address + ( ImageMemory[tex].width * y * 4 ) + ( x * 4 )) = c1;
+        *(address + ( ImageMemory[tex].width * y ) + x ) = c1;
       }
     }
     for ( int y = 0; y < size/2; y++) {
       for ( int x = size/2; x < size ; x++) {
         int *address = ImageMemory[tex].mem;
-        *(address + ( ImageMemory[tex].width * y * 4 ) + ( x * 4 )) = c2;
+        *(address + ( ImageMemory[tex].width * y ) + x ) = c2;
       }
     }
     for ( int y = size/2; y < size; y++) {
       for ( int x = 0; x < size/2 ; x++) {
         int *address = ImageMemory[tex].mem;
-        *(address + ( ImageMemory[tex].width * y * 4 ) + ( x * 4 )) = c2;
+        *(address + ( ImageMemory[tex].width * y ) + x ) = c2;
       }
     }
     ImageMemory[tex].x = size/2;                             // store the x-cordinate of the center ( grab point )
@@ -88,13 +88,29 @@ int DummyTex(int tex, int size, int c1, int c2) {
   }
 };
 
-//int GetTexPixel(int tex, int x, int y, float rot) {
-//  if ( ImageMemory[tex].used == 1 ) {
-//    x += 1000000000; // workaround for Modula
-//    y += 1000000000; // workaround for Module
-//    x %= ImageMemory[tex].width;  // map the x pointer into the Texture
-//    y %= ImageMemory[tex].height; // map the y pointer into the Texture
-//    if ( rot != 0 ) {
-//      fprintf(stderr, "Rotation is not implimented")
+int getTexPixel(int tex, int x, int y, double rot) {
+  if ( ImageMemory[tex].used == 1 ) {
+    x += 1000000000; // workaround for Modula
+    y += 1000000000; // workaround for Module
+    x %= ImageMemory[tex].width;  // map the x pointer into the Texture
+    y %= ImageMemory[tex].height; // map the y pointer into the Texture
+    if ( rot != 0 ) {
+      fprintf(stderr, "warning : Rotation is not god implimented\n");
+      double xt = x;
+      double yt = y;
+      x = (xt*cos(Radians(rot)))-(yt*sin(Radians(rot)));
+      y = (xt*sin(Radians(rot)))+(yt*cos(Radians(rot)));
+      x += 1000000000; // workaround for Modula
+      y += 1000000000; // workaround for Module
+      x %= ImageMemory[tex].width;  // map the x pointer into the Texture
+      y %= ImageMemory[tex].height; // map the y pointer into the Texture
+    }
+    return *(ImageMemory[tex].mem+(y*ImageMemory[tex].width*4)+(x*4));
+  }
+}
 
+int getTexWigth(int tex) { return ImageMemory[tex].width; };
+int getTexHeight(int tex) { return ImageMemory[tex].height; };
+int getTexX(int tex) { return ImageMemory[tex].x; };
+int getTexY(int tex) { return ImageMemory[tex].y; };
 
