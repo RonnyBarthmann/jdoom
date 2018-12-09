@@ -39,15 +39,107 @@
 #include "main.h"
 
 int main(int argc, char* argv[]) {
-  if ( initOutput(OutputDriver) == 0 ) {
+  int exit = 0;
+  SDL_Surface* screen;
+  SDL_Event event;
+  int x_movement;
+  int y_movement;
+  int a_movement;
+  int fastmove;
+  if ( sizeof(int) != 4 ) {
+    fprintf(stderr, " fatal: sizeof(int) != 4 > exit");
     return 0;
   };
-  if ( openOutput(OutputDriver,width,height) == 0 ) {
-    return 0;
+  if ( initOutput(OutputDriver) == 0 ) {               // Init the outputsystem
+    fprintf(stderr, " fatal: cannot init the OutputDriver > exit");
+    return 0;                                          // if failed > exit
+  };
+  screen = openOutput(OutputDriver,width,height);
+  if ( screen == 0 ) {                                 // Open the outputsystem
+    fprintf(stderr, " fatal: cannot open the OutputDriver > exit");
+    return 0;                                          // if failed > exit
   };
 
-  // do {
-  // } while ( 1 == 1 );
+  // Main-Loop
+  do {
+    // EventHandler
+    while ( SDL_PollEvent( &event ) ) {
+      switch( event.type ) {
+        case SDL_QUIT:
+          exit = 2; // EXIT by window
+          break;
+        case SDL_KEYDOWN:
+          switch( event.key.keysym.sym ){
+            case SDLK_a:
+              x_movement = -1;
+              break;
+            case SDLK_d:
+              x_movement =  1;
+              break;
+            case SDLK_w:
+              y_movement =  1;
+              break;
+            case SDLK_s:
+              y_movement = -1;
+              break;
+            case SDLK_LEFT:
+              a_movement =  1;
+              break;
+            case SDLK_RIGHT:
+              a_movement = -1;
+              break;
+            case SDLK_e:
+              fastmove = 1;
+              break;
+            case SDLK_ESCAPE:
+              exit = 1; // EXIT by key
+            default:
+              break;
+          }
+        case SDL_KEYUP:
+          switch( event.key.keysym.sym ){
+            case SDLK_a:
+              x_movement = 0;
+              break;
+            case SDLK_d:
+              x_movement = 0;
+              break;
+            case SDLK_w:
+              y_movement = 0;
+              break;
+            case SDLK_s:
+              y_movement = 0;
+              break;
+            case SDLK_LEFT:
+              a_movement = 0;
+              break;
+            case SDLK_RIGHT:
+              a_movement = 0;
+              break;
+            case SDLK_e:
+              fastmove = 0;
+              break;
+            default:
+              break;
+          }
+        default:
+          break;
+      }
+    }
+
+    // MoveHandler
+    // insert here the Sin() Cos() XY shit...
+
+    // ScreenHandler
+    if ( startDrawing(screen) != 1 ) {
+      fprintf(stderr, " fatal: cannot draw on the OutputDriver > exit");
+      return 0;
+    }
+    plotPixel(screen,px,1,255);
+    stopDrawing(screen,1);
+  } while ( exit == 0 );
+  // Cleanup
+  SDL_Quit();
 };
 
 
