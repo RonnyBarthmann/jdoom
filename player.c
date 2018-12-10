@@ -36,44 +36,131 @@
  *
  */
 
-void updatePlayer(int delay, int x, int y, int a, int mx, int my, int s) {
+void DrawFlatPOV(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4, double z, int tex) {
+  double ox1, oy1, ox2, oy2, ox3, oy3, ox4, oy4;
+  x1 -= px;
+  y1 -= py;
+  x2 -= px;
+  y2 -= py;
+  x3 -= px;
+  y3 -= py;
+  x4 -= px;
+  y4 -= py;
+
+  ox1 = 0 + ( x1 * cos(0-pa) ) - ( y1 * sin(0-pa) );
+  oy1 = 0 + ( y1 * cos(0-pa) ) + ( x1 * sin(0-pa) );
+  ox2 = 0 + ( x2 * cos(0-pa) ) - ( y2 * sin(0-pa) );
+  oy2 = 0 + ( y2 * cos(0-pa) ) + ( x2 * sin(0-pa) );
+  ox3 = 0 + ( x3 * cos(0-pa) ) - ( y3 * sin(0-pa) );
+  oy3 = 0 + ( y3 * cos(0-pa) ) + ( x3 * sin(0-pa) );
+  ox4 = 0 + ( x4 * cos(0-pa) ) - ( y4 * sin(0-pa) );
+  oy4 = 0 + ( y4 * cos(0-pa) ) + ( x4 * sin(0-pa) );
+
+  DrawFlat(ox1,oy1,ox2,oy2,ox3,oy3,ox4,oy4,z,tex);
+}
+
+void DrawCellingPOV(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4, double z, int tex) {
+  double ox1, oy1, ox2, oy2, ox3, oy3, ox4, oy4;
+  x1 -= px;
+  y1 -= py;
+  x2 -= px;
+  y2 -= py;
+  x3 -= px;
+  y3 -= py;
+  x4 -= px;
+  y4 -= py;
+
+  ox1 = 0 + ( x1 * cos(0-pa) ) - ( y1 * sin(0-pa) );
+  oy1 = 0 + ( y1 * cos(0-pa) ) + ( x1 * sin(0-pa) );
+  ox2 = 0 + ( x2 * cos(0-pa) ) - ( y2 * sin(0-pa) );
+  oy2 = 0 + ( y2 * cos(0-pa) ) + ( x2 * sin(0-pa) );
+  ox3 = 0 + ( x3 * cos(0-pa) ) - ( y3 * sin(0-pa) );
+  oy3 = 0 + ( y3 * cos(0-pa) ) + ( x3 * sin(0-pa) );
+  ox4 = 0 + ( x4 * cos(0-pa) ) - ( y4 * sin(0-pa) );
+  oy4 = 0 + ( y4 * cos(0-pa) ) + ( x4 * sin(0-pa) );
+
+  DrawCelling(ox1,oy1,ox2,oy2,ox3,oy3,ox4,oy4,z,tex);
+}
+
+void DrawWallPOV(double x1, double y1, double x2, double y2, double h, double z, int tex) {
+  double ox1, oy1, ox2, oy2;
+  x1 -= px;
+  y1 -= py;
+  x2 -= px;
+  y2 -= py;
+
+  ox1 = 0 + ( x1 * cos(0-pa) ) - ( y1 * sin(0-pa) );
+  oy1 = 0 + ( y1 * cos(0-pa) ) + ( x1 * sin(0-pa) );
+  ox2 = 0 + ( x2 * cos(0-pa) ) - ( y2 * sin(0-pa) );
+  oy2 = 0 + ( y2 * cos(0-pa) ) + ( x2 * sin(0-pa) );
+
+  DrawWall(ox1,oy1,ox2,oy2,h,z,tex);
+}
+
+void DrawSpritePOV(double x, double y, double z, int tex, int rot) {
+  double ox, oy;
+  x -= px;
+  y -= py;
+
+  ox = 0 + ( x * cos(0-pa) ) - ( y * sin(0-pa) );
+  oy = 0 + ( y * cos(0-pa) ) + ( x * sin(0-pa) );
+
+  DrawSprite(ox,oy,z,tex,rot);
+}
+
+int IfLineVisPOV(double x1, double y1, double x2, double y2) {
+  double ox1, oy1, ox2, oy2;
+  x1 -= px;
+  y1 -= py;
+  x2 -= px;
+  y2 -= py;
+
+  ox1 = 0 + ( x1 * cos(0-pa) ) - ( y1 * sin(0-pa) );
+  oy1 = 0 + ( y1 * cos(0-pa) ) + ( x1 * sin(0-pa) );
+  ox2 = 0 + ( x2 * cos(0-pa) ) - ( y2 * sin(0-pa) );
+  oy2 = 0 + ( y2 * cos(0-pa) ) + ( x2 * sin(0-pa) );
+
+  return ifLineVis(ox1,oy1,ox2,oy2);
+}
+
+void updatePlayer(int delay, int y, int x, int a, int mx, int my, int s) {
   float d = (float) delay;
   if ( y == -1 && s != 0 ) {
-    py -= sin(Radians(pa))*d/2;
-    px -= cos(Radians(pa))*d/2;
+    py -= sin(pa)*d/2;
+    px -= cos(pa)*d/2;
   }
   if ( y == -1 && s == 0 ) {
-    py -= sin(Radians(pa))*d/5;
-    px -= cos(Radians(pa))*d/5;
+    py -= sin(pa)*d/5;
+    px -= cos(pa)*d/5;
   }
   if ( y == 1 && s != 0 ) {
-    py += sin(Radians(pa))*d/2;
-    px += cos(Radians(pa))*d/2;
+    py += sin(pa)*d/2;
+    px += cos(pa)*d/2;
   }
   if ( y == 1 && s == 0 ) {
-    py += sin(Radians(pa))*d/5;
-    px += cos(Radians(pa))*d/5;
+    py += sin(pa)*d/5;
+    px += cos(pa)*d/5;
   }
   if ( x == 1 && s != 0 ) {
-    px -= sin(Radians(pa))*d/2;
-    py += cos(Radians(pa))*d/2;
+    px -= sin(pa)*d/2;
+    py += cos(pa)*d/2;
   }
   if ( x == 1 && s == 0 ) {
-    px -= sin(Radians(pa))*d/5;
-    py += cos(Radians(pa))*d/5;
+    px -= sin(pa)*d/5;
+    py += cos(pa)*d/5;
   }
   if ( x == -1 && s != 0 ) {
-    px += sin(Radians(pa))*d/2;
-    py -= cos(Radians(pa))*d/2;
+    px += sin(pa)*d/2;
+    py -= cos(pa)*d/2;
   }
   if ( x == -1 && s == 0 ) {
-    px += sin(Radians(pa))*d/5;
-    py -= cos(Radians(pa))*d/5;
+    px += sin(pa)*d/5;
+    py -= cos(pa)*d/5;
   }
   if ( a == 1 ) {
-    pa += d/10;
+    pa += d/1000;
   }
   if ( a == -1 ) {
-    pa -= d/10;
+    pa -= d/1000;
   }
 }

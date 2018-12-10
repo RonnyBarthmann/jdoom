@@ -172,7 +172,10 @@ int stopDrawing(int output, int final) {
 
 void outputStuff(int output) {
   if ( mouseLook != 0 ) {
-    mouseLook = 0;
-    fprintf(stderr, "mouselook are not supported yet\n");
+    SDL_ShowCursor (SDL_DISABLE);
+    SDL_WM_GrabInput (SDL_GRAB_ON);
+  } else {
+    SDL_ShowCursor (SDL_ENABLE);
+    SDL_WM_GrabInput (SDL_GRAB_OFF);
   }
 }

@@ -48,20 +48,20 @@
 #include <time.h>
 
 int mouseLook = 1;
-float  px = 0, py = 0, ph = 100, pa = 0;
+double  px = 0, py = 0, ph = 100, pa = 0;
 
 #include "math.h"
 #include "output.h"
 #include "config.h"
 #include "textures.h"
-//#include "player.h"
 //#include "r_math.h"
 #include "render.h"
+//#include "player.h"
 
 //#include "math.c"
 #include "output.c"
 #include "textures.c"
-#include "player.c"
 #include "r_math.c"
 #include "render.c"
+#include "player.c"
 

@@ -59,6 +59,7 @@ int main(int argc, char* argv[]) {
   int x_movement;
   int y_movement;
   int a_movement;
+  int m_movement;
   int fastmove;
   if ( sizeof(int) != 4 ) {
     fprintf(stderr, " fatal: sizeof(int) != 4 > exit\n");
@@ -82,6 +83,7 @@ int main(int argc, char* argv[]) {
   DummyTex(5,32,RGB(170,170,0),RGB(255,255,85));
   DummyTex(6,32,RGB(170,0,170),RGB(255,85,255));
 
+  SDL_EnableKeyRepeat(0,0);
   // Main-Loop
   do {
     // Timer
@@ -91,8 +93,7 @@ int main(int argc, char* argv[]) {
     fps = 1000000 / delay;
     sprintf(fpsS,"%d",fps);
     setOutputTitle(OutputDriver,fpsS);
-    // for ( int i = 0 ; i < 1000000 ; i++ ) i++;
-
+    m_movement = 0;
     // EventHandler
     while ( SDL_PollEvent( &event ) ) {
       switch( event.type ) {
@@ -108,31 +109,11 @@ int main(int argc, char* argv[]) {
             return 0;
           };
           break;
+        case SDL_MOUSEMOTION:
+          m_movement = event.motion.x;
+          break;
         case SDL_KEYDOWN:
           switch( event.key.keysym.sym ){
-            case SDLK_a:
-              x_movement = -1;
-              break;
-            case SDLK_d:
-              x_movement =  1;
-              break;
-            case SDLK_w:
-            case SDLK_UP:
-              y_movement =  1;
-              break;
-            case SDLK_s:
-            case SDLK_DOWN:
-              y_movement = -1;
-              break;
-            case SDLK_LEFT:
-              a_movement =  1;
-              break;
-            case SDLK_RIGHT:
-              a_movement = -1;
-              break;
-            case SDLK_e:
-              fastmove = 1;
-              break;
             case SDLK_ESCAPE:
               exit = 1; // EXIT by key
               break;
@@ -142,41 +123,46 @@ int main(int argc, char* argv[]) {
             default:
               break;
           }
-        case SDL_KEYUP:
-          switch( event.key.keysym.sym ){
-            case SDLK_a:
-              x_movement = 0;
-              break;
-            case SDLK_d:
-              x_movement = 0;
-              break;
-            case SDLK_w:
-            case SDLK_UP:
-              y_movement = 0;
-              break;
-            case SDLK_s:
-            case SDLK_DOWN:
-              y_movement = 0;
-              break;
-            case SDLK_LEFT:
-              a_movement = 0;
-              break;
-            case SDLK_RIGHT:
-              a_movement = 0;
-              break;
-            case SDLK_e:
-              fastmove = 0;
-              break;
-            default:
-              break;
-          }
         default:
           break;
       }
     }
 
+    x_movement = 0;
+    y_movement = 0;
+    a_movement = 0;
+    fastmove = 0;
+    Uint8 *keys = SDL_GetKeyState(NULL);
+    if (keys[SDLK_a]) {
+        x_movement = -1;
+    }
+    if (keys[SDLK_d]) {
+        x_movement =  1;
+    }
+    if (keys[SDLK_w]) {
+        y_movement =  1;
+    }
+    if (keys[SDLK_s]) {
+        y_movement = -1;
+    }
+    if (keys[SDLK_UP]) {
+        y_movement =  1;
+    }
+    if (keys[SDLK_DOWN]) {
+        y_movement = -1;
+    }
+    if (keys[SDLK_LEFT]) {
+        a_movement =  1;
+    }
+    if (keys[SDLK_RIGHT]) {
+        a_movement = -1;
+    }
+    if (keys[SDLK_e]) {
+        fastmove = 1;
+    }
+
     // MoveHandler
-    updatePlayer(delay,x_movement,y_movement,a_movement,0,0,0);
+    updatePlayer(delay/1000,x_movement,y_movement,a_movement,m_movement,0,fastmove);
 
     // ScreenHandler
     if ( startDrawing(OutputDriver,screen) != 1 ) {
@@ -186,6 +172,7 @@ int main(int argc, char* argv[]) {
     clearScene();
 
     // Rendering
+    DrawFlatPOV(-100,200,100,200,100,100,-100,100,50,0);
 
     stopDrawing(OutputDriver,1);
     outputStuff(OutputDriver);

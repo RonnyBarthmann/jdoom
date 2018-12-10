@@ -181,20 +181,20 @@ void _DrawFlat2(double x1, double y1, double x2, double y2, double x3, double y3
   int TriMode, i, ox4, oy4, oy, behindCam=0;
   double ox1, oy1, ox2, oy2, ox3, oy3, oxL, oxR;
   if ( y1 > 0 ) {
-    ox1 = ( ( x1 * ( height / 2 ) ) / y1 ) + ( width / 2 );
-    oy1 = ( ( z * ( height / 2 ) ) / y1 ) + ( height / 2 );
+    ox1 = round( ( ( x1 * ( height / 2 ) ) / y1 ) + ( width / 2 ) );
+    oy1 = round( ( ( z * ( height / 2 ) ) / y1 ) + ( height / 2 ) );
   } else {
     behindCam = 1;
   }
   if ( y2 > 0 ) {
-    ox2 = ( ( x2 * ( height / 2 ) ) / y2 ) + ( width / 2 );
-    oy2 = ( ( z * ( height / 2 ) ) / y2 ) + ( height / 2 );
+    ox2 = round( ( ( x2 * ( height / 2 ) ) / y2 ) + ( width / 2 ) );
+    oy2 = round( ( ( z * ( height / 2 ) ) / y2 ) + ( height / 2 ) );
   } else {
     behindCam = 1;
   }
   if ( y3 > 0 ) {
-    ox3 = ( ( x3 * ( height / 2 ) ) / y3 ) + ( width / 2 );
-    oy3 = ( ( z * ( height / 2 ) ) / y3 ) + ( height / 2 );
+    ox3 = round( ( ( x3 * ( height / 2 ) ) / y3 ) + ( width / 2 ) );
+    oy3 = round( ( ( z * ( height / 2 ) ) / y3 ) + ( height / 2 ) );
   } else {
     behindCam = 1;
   }
@@ -392,12 +392,12 @@ int ifLineVis(double x1, double y1, double x2, double y2) {
 void _DrawWall2(double x1, double y1, double x2, double y2, double z, double h, int tex) {
   double ox1, oy1, oh1, ox2, oy2, oh2, yWallStep, hWallStep, dWallStep, xTexStep, oy, oh, od, tx;
   int i, reverse;
-  ox1 = ( ( x1 * ( height / 2 ) ) / y1 ) + ( width / 2 );
-  oy1 = ( ( z * ( height / 2 ) ) / y1 ) + ( height / 2 );
-  oh1 =   ( h * ( height / 2 ) ) / y1;
-  ox2 = ( ( x2 * ( height / 2 ) ) / y2 ) + ( width / 2 );
-  oy2 = ( ( z * ( height / 2 ) ) / y2 ) + ( height / 2 );
-  oh2 =   ( h * ( height / 2 ) ) / y2;
+  ox1 = round( ( ( x1 * ( height / 2 ) ) / y1 ) + ( width / 2 ) );
+  oy1 = round( ( ( z * ( height / 2 ) ) / y1 ) + ( height / 2 ) );
+  oh1 = round(   ( h * ( height / 2 ) ) / y1 );
+  ox2 = round( ( ( x2 * ( height / 2 ) ) / y2 ) + ( width / 2 ) );
+  oy2 = round( ( ( z * ( height / 2 ) ) / y2 ) + ( height / 2 ) );
+  oh2 = round(   ( h * ( height / 2 ) ) / y2 );
   if ( DebugModeWall != 0 ) {
     if ( y1 > 0 ) {
       Box(ox1-2,oy1-2,5,5,255);
@@ -471,18 +471,18 @@ void _DrawSprite2(double x, double y, double z, int tex, double rot) {
   double ox1, oy1, ox2, oy2, ox3, oy3, ox4, oy4, sScale, sStep, xPos, yPos;
   int ox, oy;
   if ( y > 0 ) {
-    ox = ( ( x * ( height / 2 ) ) / y ) + ( width / 2 );
-    oy = ( ( z * ( height / 2 ) ) / y ) + ( height / 2 );
+    ox = round( ( ( x * ( height / 2 ) ) / y ) + ( width / 2 ) );
+    oy = round( ( ( z * ( height / 2 ) ) / y ) + ( height / 2 ) );
     sScale = 1 / y;
     sStep = y;
-    ox1 = ox - getTexX(tex)*sScale*(height/2);
-    oy1 = oy - getTexY(tex)*sScale*(height/2);
-    ox2 = ox1 + ( getTexWigth(tex)*sScale*(height/2) );
-    oy2 = oy1;
-    ox3 = ox1 + ( getTexWigth(tex)*sScale*(height/2) );
-    oy3 = oy1 + ( getTexHeight(tex)*sScale*(height/2) );
-    ox4 = ox1;
-    oy4 = oy1 + ( getTexHeight(tex)*sScale*(height/2) );
+    ox1 = round( ox - getTexX(tex)*sScale*(height/2) );
+    oy1 = round( oy - getTexY(tex)*sScale*(height/2) );
+    ox2 = round( ox1 + ( getTexWigth(tex)*sScale*(height/2) ) );
+    oy2 = round( oy1 );
+    ox3 = round( ox1 + ( getTexWigth(tex)*sScale*(height/2) ) );
+    oy3 = round( oy1 + ( getTexHeight(tex)*sScale*(height/2) ) );
+    ox4 = round( ox1 );
+    oy4 = round( oy1 + ( getTexHeight(tex)*sScale*(height/2) ) );
     if ( DebugModeSprite != 0 ) {
       Box(ox1-2,oy1-2,5,5,255);
       Box(ox2-2,oy2-2,5,5,255);
