@@ -83,6 +83,9 @@ int main(int argc, char* argv[]) {
   DummyTex(5,32,RGB(170,170,0),RGB(255,255,85));
   DummyTex(6,32,RGB(170,0,170),RGB(255,85,255));
 
+  InitIWAD("jDOOM.wad");
+  LoadMap("map01");
+
   SDL_EnableKeyRepeat(0,0);
   // Main-Loop
   do {
@@ -171,13 +174,16 @@ int main(int argc, char* argv[]) {
     }
     clearScene();
 
+    // // Rendering ( Testing )
+    // DrawFlatPOV(-300,200,-100,200,-100,100,-300,100,50,0);
+    // DrawFlatPOV(-100,200,100,200,100,100,-100,100,50,0);
+    // DrawFlatPOV(100,200,300,200,300,100,100,100,50,0);
+    // DrawFlatPOV(-300,400,-100,400,-100,200,-300,200,50,0);
+    // DrawFlatPOV(-100,400,100,400,100,200,-100,200,50,0);
+    // DrawFlatPOV(100,400,300,400,300,200,100,200,50,0);
+
     // Rendering
-    DrawFlatPOV(-300,200,-100,200,-100,100,-300,100,50,0);
-    DrawFlatPOV(-100,200,100,200,100,100,-100,100,50,0);
-    DrawFlatPOV(100,200,300,200,300,100,100,100,50,0);
-    DrawFlatPOV(-300,400,-100,400,-100,200,-300,200,50,0);
-    DrawFlatPOV(-100,400,100,400,100,200,-100,200,50,0);
-    DrawFlatPOV(100,400,300,400,300,200,100,200,50,0);
+    DrawRooms(getNearestRoom(1));
 
     stopDrawing(OutputDriver,1);
     outputStuff(OutputDriver);
