@@ -123,37 +123,37 @@ int IfLineVisPOV(double x1, double y1, double x2, double y2) {
   return ifLineVis(ox1,oy1,ox2,oy2);
 }
 
-void updatePlayer(int delay, int y, int x, int a, int mx, int my, int s) {
+void updatePlayer(int delay, int x, int y, int a, int mx, int my, int s) {
   float d = (float) delay;
-  if ( y == -1 && s != 0 ) {
+  if ( x == -1 && s != 0 ) {
     py -= sin(pa)*d/2;
     px -= cos(pa)*d/2;
   }
-  if ( y == -1 && s == 0 ) {
+  if ( x == -1 && s == 0 ) {
     py -= sin(pa)*d/5;
     px -= cos(pa)*d/5;
   }
-  if ( y == 1 && s != 0 ) {
+  if ( x == 1 && s != 0 ) {
     py += sin(pa)*d/2;
     px += cos(pa)*d/2;
   }
-  if ( y == 1 && s == 0 ) {
+  if ( x == 1 && s == 0 ) {
     py += sin(pa)*d/5;
     px += cos(pa)*d/5;
   }
-  if ( x == 1 && s != 0 ) {
+  if ( y == 1 && s != 0 ) {
     px -= sin(pa)*d/2;
     py += cos(pa)*d/2;
   }
-  if ( x == 1 && s == 0 ) {
+  if ( y == 1 && s == 0 ) {
     px -= sin(pa)*d/5;
     py += cos(pa)*d/5;
   }
-  if ( x == -1 && s != 0 ) {
+  if ( y == -1 && s != 0 ) {
     px += sin(pa)*d/2;
     py -= cos(pa)*d/2;
   }
-  if ( x == -1 && s == 0 ) {
+  if ( y == -1 && s == 0 ) {
     px += sin(pa)*d/5;
     py -= cos(pa)*d/5;
   }

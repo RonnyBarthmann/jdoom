@@ -53,3 +53,6 @@ int    DebugModeSprite = 1; // if 1, draw outlines and corners on sprites
 int    RenderWallTex = 1;   // if 0, render flat color on walls
 int    RenderFlatTex = 1;   // if 0, render flat color on flats and cellings
 int    RenderSpriteTex = 1; // if 0, render flat color on sprites
+
+// Konstanten ( Limits )
+#define MAX_SECTORS 1024  // Maximum of sectors that can be handled from the engine
