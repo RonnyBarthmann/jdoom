@@ -82,7 +82,7 @@ void DrawCellingPOV(double x1, double y1, double x2, double y2, double x3, doubl
   DrawCelling(ox1,oy1,ox2,oy2,ox3,oy3,ox4,oy4,z,tex);
 }
 
-void DrawWallPOV(double x1, double y1, double x2, double y2, double h, double z, int tex) {
+void DrawWallPOV(double x1, double y1, double x2, double y2, double z, double h, int tex) {
   double ox1, oy1, ox2, oy2;
   x1 -= px;
   y1 -= py;
@@ -94,7 +94,7 @@ void DrawWallPOV(double x1, double y1, double x2, double y2, double h, double z,
   ox2 = 0 + ( x2 * cos(0-pa) ) - ( y2 * sin(0-pa) );
   oy2 = 0 + ( y2 * cos(0-pa) ) + ( x2 * sin(0-pa) );
 
-  DrawWall(ox1,oy1,ox2,oy2,h,z,tex);
+  DrawWall(ox1,oy1,ox2,oy2,z,h,tex);
 }
 
 void DrawSpritePOV(double x, double y, double z, int tex, int rot) {

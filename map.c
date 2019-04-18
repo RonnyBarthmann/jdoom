@@ -229,42 +229,42 @@ int getNearestRoom(int init) {
   return room;
 }
 
-void _DrawRoomSide(double x1,double y1,double x2,double y2,double h,double z,double left,double right,double upper,double lower,int leTex,int riTex,int upTex,int loTex) {
+void _DrawRoomSide(double x1,double y1,double x2,double y2,double z,double h,double left,double right,double upper,double lower,int leTex,int riTex,int upTex,int loTex) {
   double tempX, tempY, tempH;
   if ( left >= 100 ) {
-    DrawWallPOV(x1,y1,x2,y2,h,z,leTex);
+    DrawWallPOV(x1,y1,x2,y2,z,h,leTex);
     return;
   } else if ( left > 0 ) {
     tempX = ((x1*(100-left))+(x2*left))/100;
     tempY = ((y1*(100-left))+(y2*left))/100;
-    DrawWallPOV(x1,y1,tempX,tempY,h,z,leTex);
+    DrawWallPOV(x1,y1,tempX,tempY,z,h,leTex);
     x1 = tempX;
     y1 = tempY;
   }
   if ( right >= 100 ) {
-    DrawWallPOV(x1,y1,x2,y2,h,z,riTex);
+    DrawWallPOV(x1,y1,x2,y2,z,h,riTex);
     return;
   } else if ( right > 0 ) {
     tempX = ((x1*right)+(x2*(100-right)))/100;
     tempY = ((y1*right)+(y2*(100-right)))/100;
-    DrawWallPOV(tempX,tempY,x2,y2,h,z,riTex);
+    DrawWallPOV(tempX,tempY,x2,y2,z,h,riTex);
     x2 = tempX;
     y2 = tempY;
   }
   if ( upper >= 100 ) {
-    DrawWallPOV(x1,y1,x2,y2,h,z,upTex);
+    DrawWallPOV(x1,y1,x2,y2,z,h,upTex);
     return;
   } else if ( upper > 0 ) {
     tempH = (h*upper)/100;
-    DrawWallPOV(x1,y1,x2,y2,tempH,z-h+tempH,upTex);
+    DrawWallPOV(x1,y1,x2,y2,z-h+tempH,tempH,upTex);
     h - tempH;
   }
   if ( lower >= 100 ) {
-    DrawWallPOV(x1,y1,x2,y2,h,z,loTex);
+    DrawWallPOV(x1,y1,x2,y2,z,h,loTex);
     return;
   } else if ( lower > 0 ) {
     h = (h*lower)/100;
-    DrawWallPOV(x1,y1,x2,y2,h,z,loTex);
+    DrawWallPOV(x1,y1,x2,y2,z,h,loTex);
   }
 }
 
@@ -272,24 +272,24 @@ void _DrawRoom(int room) {
   DrawFlatPOV(RoomData[room].x1,RoomData[room].y1,RoomData[room].x2,RoomData[room].y2,RoomData[room].x3,RoomData[room].y3,RoomData[room].x4,RoomData[room].y4,RoomData[room].groundY,RoomData[room].ground.leftTex);
   DrawCellingPOV(RoomData[room].x1,RoomData[room].y1,RoomData[room].x2,RoomData[room].y2,RoomData[room].x3,RoomData[room].y3,RoomData[room].x4,RoomData[room].y4,RoomData[room].groundY-RoomData[room].height,RoomData[room].cover.leftTex);
   if ( RoomData[room].back.id >= 0 ) {
-    _DrawRoomSide(RoomData[room].x1,RoomData[room].y1,RoomData[room].x2,RoomData[room].y2,RoomData[room].height,RoomData[room].groundY,RoomData[room].back.leftP,RoomData[room].back.rightP,RoomData[room].back.upperP,RoomData[room].back.lowerP,RoomData[room].back.leftTex,RoomData[room].back.rightTex,RoomData[room].back.upperTex,RoomData[room].back.lowerTex);
+    _DrawRoomSide(RoomData[room].x1,RoomData[room].y1,RoomData[room].x2,RoomData[room].y2,RoomData[room].groundY,RoomData[room].height,RoomData[room].back.leftP,RoomData[room].back.rightP,RoomData[room].back.upperP,RoomData[room].back.lowerP,RoomData[room].back.leftTex,RoomData[room].back.rightTex,RoomData[room].back.upperTex,RoomData[room].back.lowerTex);
   } else {
-    DrawWallPOV(RoomData[room].x1,RoomData[room].y1,RoomData[room].x2,RoomData[room].y2,RoomData[room].height,RoomData[room].groundY,RoomData[room].back.leftTex);
+    DrawWallPOV(RoomData[room].x1,RoomData[room].y1,RoomData[room].x2,RoomData[room].y2,RoomData[room].groundY,RoomData[room].height,RoomData[room].back.leftTex);
   }
   if ( RoomData[room].right.id >= 0 ) {
-    _DrawRoomSide(RoomData[room].x2,RoomData[room].y2,RoomData[room].x3,RoomData[room].y3,RoomData[room].height,RoomData[room].groundY,RoomData[room].right.leftP,RoomData[room].right.rightP,RoomData[room].right.upperP,RoomData[room].right.lowerP,RoomData[room].right.leftTex,RoomData[room].right.rightTex,RoomData[room].right.upperTex,RoomData[room].right.lowerTex);
+    _DrawRoomSide(RoomData[room].x2,RoomData[room].y2,RoomData[room].x3,RoomData[room].y3,RoomData[room].groundY,RoomData[room].height,RoomData[room].right.leftP,RoomData[room].right.rightP,RoomData[room].right.upperP,RoomData[room].right.lowerP,RoomData[room].right.leftTex,RoomData[room].right.rightTex,RoomData[room].right.upperTex,RoomData[room].right.lowerTex);
   } else {
-    DrawWallPOV(RoomData[room].x2,RoomData[room].y2,RoomData[room].x3,RoomData[room].y3,RoomData[room].height,RoomData[room].groundY,RoomData[room].right.leftTex);
+    DrawWallPOV(RoomData[room].x2,RoomData[room].y2,RoomData[room].x3,RoomData[room].y3,RoomData[room].groundY,RoomData[room].height,RoomData[room].right.leftTex);
   }
   if ( RoomData[room].front.id >= 0 ) {
-    _DrawRoomSide(RoomData[room].x3,RoomData[room].y3,RoomData[room].x4,RoomData[room].y4,RoomData[room].height,RoomData[room].groundY,RoomData[room].front.leftP,RoomData[room].front.rightP,RoomData[room].front.upperP,RoomData[room].front.lowerP,RoomData[room].front.leftTex,RoomData[room].front.rightTex,RoomData[room].front.upperTex,RoomData[room].front.lowerTex);
+    _DrawRoomSide(RoomData[room].x3,RoomData[room].y3,RoomData[room].x4,RoomData[room].y4,RoomData[room].groundY,RoomData[room].height,RoomData[room].front.leftP,RoomData[room].front.rightP,RoomData[room].front.upperP,RoomData[room].front.lowerP,RoomData[room].front.leftTex,RoomData[room].front.rightTex,RoomData[room].front.upperTex,RoomData[room].front.lowerTex);
   } else {
-    DrawWallPOV(RoomData[room].x3,RoomData[room].y3,RoomData[room].x4,RoomData[room].y4,RoomData[room].height,RoomData[room].groundY,RoomData[room].front.leftTex);
+    DrawWallPOV(RoomData[room].x3,RoomData[room].y3,RoomData[room].x4,RoomData[room].y4,RoomData[room].groundY,RoomData[room].height,RoomData[room].front.leftTex);
   }
   if ( RoomData[room].left.id >= 0 ) {
-    _DrawRoomSide(RoomData[room].x4,RoomData[room].y4,RoomData[room].x1,RoomData[room].y1,RoomData[room].height,RoomData[room].groundY,RoomData[room].left.leftP,RoomData[room].left.rightP,RoomData[room].left.upperP,RoomData[room].left.lowerP,RoomData[room].left.leftTex,RoomData[room].left.rightTex,RoomData[room].left.upperTex,RoomData[room].left.lowerTex);
+    _DrawRoomSide(RoomData[room].x4,RoomData[room].y4,RoomData[room].x1,RoomData[room].y1,RoomData[room].groundY,RoomData[room].height,RoomData[room].left.leftP,RoomData[room].left.rightP,RoomData[room].left.upperP,RoomData[room].left.lowerP,RoomData[room].left.leftTex,RoomData[room].left.rightTex,RoomData[room].left.upperTex,RoomData[room].left.lowerTex);
   } else {
-    DrawWallPOV(RoomData[room].x4,RoomData[room].y4,RoomData[room].x1,RoomData[room].y1,RoomData[room].height,RoomData[room].groundY,RoomData[room].left.leftTex);
+    DrawWallPOV(RoomData[room].x4,RoomData[room].y4,RoomData[room].x1,RoomData[room].y1,RoomData[room].groundY,RoomData[room].height,RoomData[room].left.leftTex);
   }
 }
 
