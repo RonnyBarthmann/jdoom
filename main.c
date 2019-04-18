@@ -84,7 +84,7 @@ int main(int argc, char* argv[]) {
   DummyTex(6,32,RGB(170,0,170),RGB(255,85,255));
 
   InitIWAD("jDOOM.wad");
-  LoadMap("map01");
+  LoadMap("map03");
 
   SDL_EnableKeyRepeat(0,0);
   // Main-Loop
